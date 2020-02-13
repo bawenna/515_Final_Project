@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../WEB-INF/templetes/storeTemplete.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="title">
+        Orders Page - For Owners / Admins!
+    </ui:define>
+
+    <ui:define name="content">
+        Welcome Admin #{loginController.remoteUser}
+
+        <h:dataTable class="table table-striped table-bordered dt-responsive nowrap" style="width:100%"
+                     value="#{orderController.orders}" 
+                     var="order">
+            <h:column>
+                <h:outputText value="#{order.id}"></h:outputText>
+                <f:facet name="header"><h:outputText value="ID"/></f:facet>
+            </h:column>
+
+            <h:column>
+                <h:outputText value="#{order.orderTotal}"></h:outputText>
+                <f:facet name="header"><h:outputText value="Name"/></f:facet>
+            </h:column>
+
+            <h:column>
+                <h:outputText value="#{orderController.formatOrdersAsString(order)}"></h:outputText>
+                <f:facet name="header"><h:outputText value="List of games"/></f:facet>
+            </h:column>
+
+            <h:column>
+                <h:form>
+                    <h:commandLink action="#{orderController.prepareEditOrder(order)}" value="Edit"/>
+                </h:form>
+            </h:column>
+
+
+        </h:dataTable>
+    </ui:define>
+
+</ui:composition>

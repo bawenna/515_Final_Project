@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../WEB-INF/templetes/storeTemplete.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="title">
+        Cart Page
+
+        <h:form>
+            <h:commandLink action="#{userController.doGoBack()}" value="Go back"/>
+        </h:form>
+    </ui:define>
+
+    <ui:define name="content">
+        Welcome to our store! #{loginController.remoteUser}
+        <h:dataTable class="table table-striped table-bordered dt-responsive nowrap" style="width:100%"
+                     value="#{cartController.order.games}" 
+                     var="game">
+            <h:column>
+                <h:outputText value="#{game.name}"></h:outputText>
+                <f:facet name="header"><h:outputText value="ID"/></f:facet>
+            </h:column>
+
+            <h:column>
+                <h:outputText value="#{game.price}"></h:outputText>
+                <f:facet name="header"><h:outputText value="Price"/></f:facet>
+            </h:column>
+
+            <h:column>
+                <h:form>
+                    <h:inputHidden class="form-control" id="orderVersion" value="#{cartController.order.version}"/>
+                    <h:commandButton action="#{cartController.deleteFromCart(game)}" value="Remove from Cart"/>
+                </h:form>
+            </h:column>
+
+
+
+        </h:dataTable>
+        <h:column>
+            <h:outputText value="Your Total is: #{cartController.formattedOrderTotal}"></h:outputText>
+        </h:column>
+        <h:column>
+            <h:form>
+                <h:inputHidden class="form-control" id="orderVersion" value="#{cartController.order.version}"/>
+                <h:inputHidden class="form-control" id="customerVersion" value="#{cartController.customer.version}"/>
+                <h:commandLink action="#{cartController.toShipping()}" value="Checkout "/>
+            </h:form>
+
+        </h:column>
+
+    </ui:define>
+
+</ui:composition>

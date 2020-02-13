@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="order" required="true" type="edu.iit.sat.itmd4515.wzhang87.domain.Customer" />
+        <cc:attribute name="readonly" required="false" default="true" type="java.lang.Boolean" />
+        <cc:attribute name="action" required="false" method-signature="java.lang.String action()" />
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <h2>
+            <h:outputText rendered="#{cc.attrs.readonly}" value="View Customer Information"/>
+            <h:outputText rendered="#{not cc.attrs.readonly and empty cc.attrs.order.id}" value="Create New Order"/>
+            <h:outputText rendered="#{not cc.attrs.readonly and not empty cc.attrs.order.id}" value="Update Address"/>
+
+        </h2>
+        <h:form>
+            <h:panelGroup layout="block" class="form-group">
+                <h:outputLabel value="Order ID #{cc.attrs.order.id}" for="orderId" rendered="#{cc.attrs.readonly or not empty cc.attrs.order.id}" />
+                <h:inputHidden class="form-control" id="orderId" value="#{cc.attrs.order.id}"/>
+                <h:inputHidden class="form-control" id="customerVersion" value="#{cartController.order.version}"/>
+                <h:message for="orderId" errorClass="text-danger"/>
+            </h:panelGroup>
+
+            <h:panelGroup layout="block" class="form-group">
+                <h:outputLabel value="First Name" for="firstName"/>
+                <h:inputText readonly="#{cc.attrs.readonly ? 'true' : 'false'}" class="form-control" id="firstName" value="#{cc.attrs.order.customerFirstName}"/>
+                <h:message for="firstName" errorClass="text-danger"/>
+            </h:panelGroup>
+
+            <h:panelGroup layout="block" class="form-group">
+                <h:outputLabel value="Last Name" for="lastName"/>
+                <h:inputText readonly="#{cc.attrs.readonly ? 'true' : 'false'}" class="form-control" id="lastName" value="#{cc.attrs.order.customerLastName}"/>
+                <h:message for="lastName" errorClass="text-danger"/>
+            </h:panelGroup>
+
+            <h:panelGroup layout="block" class="form-group">
+                <h:outputLabel value="Phone" for="phone"/>
+                <h:inputText readonly="#{cc.attrs.readonly ? 'true' : 'false'}" class="form-control" id="phone" value="#{cc.attrs.order.customerPhone}"/>
+                <h:message for="phone" errorClass="text-danger"/>
+            </h:panelGroup>
+            
+            <h:panelGroup layout="block" class="form-group">
+                <h:outputLabel value="Email" for="email"/>
+                <h:inputText readonly="#{cc.attrs.readonly ? 'true' : 'false'}" class="form-control" id="email" value="#{cc.attrs.order.customerEmail}"/>
+                <h:message for="email" errorClass="text-danger"/>
+            </h:panelGroup>
+
+            <h:panelGroup layout="block" class="form-group">
+                <h:outputLabel value="Address" for="address"/>
+                <h:inputText readonly="#{cc.attrs.readonly ? 'true' : 'false'}" class="form-control" id="address" value="#{cc.attrs.order.customerAddress}"/>
+                <h:inputHidden class="form-control" id="orderVersion" value="#{cc.attrs.order.version}"/>
+                <h:message for="total" errorClass="text-danger"/>
+            </h:panelGroup>
+
+
+            <h:panelGroup layout="block" class="form-group">
+                <h:outputLabel value="City" for="city"/>
+                <h:inputText readonly="#{cc.attrs.readonly ? 'true' : 'false'}" class="form-control" id="city" value="#{cc.attrs.order.customerCity}"/>
+                <h:message for="total" errorClass="text-danger"/>
+            </h:panelGroup>
+
+            <h:panelGroup layout="block" class="form-group">
+                <h:outputLabel value="State" for="state"/>
+                <h:inputText readonly="#{cc.attrs.readonly ? 'true' : 'false'}" class="form-control" id="state" value="#{cc.attrs.order.customerState}"/>
+                <h:message for="total" errorClass="text-danger"/>
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="form-group">
+                <h:outputLabel value="Zip" for="zip"/>
+                <h:inputText readonly="#{cc.attrs.readonly ? 'true' : 'false'}" class="form-control" id="zip" value="#{cc.attrs.order.customerZip}"/>
+                <h:message for="total" errorClass="text-danger"/>
+            </h:panelGroup>
+
+            <ui:fragment rendered="#{not cc.attrs.readonly}">
+                <h:commandButton value="Proceed" class="btn btn-primary" action="#{cc.attrs.action}" />
+            </ui:fragment>
+        </h:form>
+    </cc:implementation>
+</html>

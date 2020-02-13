@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../WEB-INF/templetes/storeTemplete.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="title">
+        Welcome Page - For Owners / Admins!
+    </ui:define>
+
+    <ui:define name="content">
+        Welcome Admin #{loginController.remoteUser}
+        <h:form>
+            <h:commandLink action="#{gameController.prepareCreateGame()}" value="Add a New Game"/>
+        </h:form>
+        <h:form>
+            <h:commandLink action="#{orderController.prepareViewAllOrders()}" value="Manage all orders"/>
+        </h:form>
+
+        <h:dataTable class="table table-striped table-bordered dt-responsive nowrap" style="width:100%"
+                     value="#{gameService.findAll()}" 
+                     var="game">
+            <h:column>
+                <h:outputText value="#{game.id}"></h:outputText>
+                <f:facet name="header"><h:outputText value="ID"/></f:facet>
+            </h:column>
+
+            <h:column>
+                <h:outputText value="#{game.name}"></h:outputText>
+                <f:facet name="header"><h:outputText value="Name"/></f:facet>
+            </h:column>
+
+            <h:column>
+                <h:outputText value="#{game.genre}"></h:outputText>
+                <f:facet name="header"><h:outputText value="Genre"/></f:facet>
+            </h:column>
+
+            <h:column>
+                <h:outputText value="#{game.dateOfRelease}"></h:outputText>
+                <f:facet name="header"><h:outputText value="Releaase Date"/></f:facet>
+            </h:column>
+
+            <h:column>
+                <h:outputText value="#{game.price}"></h:outputText>
+                <f:facet name="header"><h:outputText value="Price"/></f:facet>
+
+            </h:column>
+
+            <h:column>
+                <h:form>
+                    <h:commandLink action="#{gameController.prepareViewGame(game)}" value="View"/>
+                </h:form>
+                <h:form>
+                    <h:commandLink action="#{gameController.prepareEditGame(game)}" value="Edit"/>
+                </h:form>
+                <h:form>
+                    <h:commandLink action="#{gameController.doDeleteGame(game)}" value="Delete"/>
+                </h:form>
+            </h:column>
+
+
+        </h:dataTable>
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../WEB-INF/templetes/storeTemplete.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="title">
+        Welcome to the VintageGame Store!
+
+        <h:form>
+            <h:commandLink action="#{userController.doGoBack()}" value="Go back"/>
+        </h:form>
+    </ui:define>
+
+    <ui:define name="content">
+        Welcome to our store! #{loginController.remoteUser}
+        <h:dataTable class="table table-striped table-bordered dt-responsive nowrap" style="width:100%"
+                     value="#{gameService.findAll()}" 
+                     var="game">
+            <h:column>
+                <h:outputText value="#{game.id}"></h:outputText>
+                <f:facet name="header"><h:outputText value="ID"/></f:facet>
+            </h:column>
+
+            <h:column>
+                <h:outputText value="#{game.name}"></h:outputText>
+                <f:facet name="header"><h:outputText value="Name"/></f:facet>
+            </h:column>
+
+            <h:column>
+                <h:outputText value="#{game.genre}"></h:outputText>
+                <f:facet name="header"><h:outputText value="Genre"/></f:facet>
+            </h:column>
+
+            <h:column>
+                <h:outputText value="#{game.dateOfRelease}"></h:outputText>
+                <f:facet name="header"><h:outputText value="Releaase Date"/></f:facet>
+            </h:column>
+
+            <h:column>
+                <h:outputText value="#{game.price}"></h:outputText>
+                <f:facet name="header"><h:outputText value="Price"/></f:facet>
+
+            </h:column>
+            <h:column>
+                <h:form>
+                    <h:commandButton action="#{cartController.addToOrder(game)}" value="Add To Cart "/>
+                </h:form>
+            </h:column>
+        </h:dataTable>
+        <h:form>
+            <h:inputHidden class="form-control" id="orderVersion" value="#{cartController.order.version}"/>
+
+            <h:commandLink action="#{cartController.toCart()}" value="Go to Your Cart "/>
+        </h:form>
+
+
+    </ui:define>
+
+</ui:composition>

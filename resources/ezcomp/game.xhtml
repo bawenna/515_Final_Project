@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="game" required="true" type="edu.iit.sat.itmd4515.wzhang87.domain.VintageGame" />
+        <cc:attribute name="readonly" required="false" default="true" type="java.lang.Boolean" />
+        <cc:attribute name="action" required="false" method-signature="java.lang.String action()" />
+        <cc:attribute name="admin" required="false" default="false" type="java.lang.Boolean" />
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <h2>
+            <h:outputText rendered="#{cc.attrs.readonly}" value="View Order"/>
+            <h:outputText rendered="#{not cc.attrs.readonly and empty cc.attrs.game.id}" value="Create New Game"/>
+            <h:outputText rendered="#{not cc.attrs.readonly and not empty cc.attrs.game.id}" value="Update Game"/>
+
+        </h2>
+        <h:form>
+            <h:panelGroup layout="block" class="form-group">
+                <h:outputLabel value="Game ID #{cc.attrs.game.id}" for="gameId" rendered="#{cc.attrs.readonly or not empty cc.attrs.game.id}" />
+                <h:inputHidden class="form-control" id="gameId" value="#{cc.attrs.game.id}"/>
+                <h:inputHidden class="form-control" id="gameVersion" value="#{cc.attrs.game.version}"/>
+                <h:message for="gameId" errorClass="text-danger"/>
+            </h:panelGroup>
+
+            <h:panelGroup layout="block" class="form-group">
+                <h:outputLabel value="Name:" for="name"/>
+                <h:inputText readonly="#{cc.attrs.readonly ? 'true' : 'false'}" class="form-control" id="name" value="#{cc.attrs.game.name}"/>
+                <h:message for="name" errorClass="text-danger"/>
+            </h:panelGroup>
+
+            <h:panelGroup layout="block" class="form-group">
+                <h:outputLabel value="Game Genre" for="genre"/>
+                <h:selectOneMenu readonly="#{cc.attrs.readonly ? 'true' : 'false'}" disabled="#{cc.attrs.readonly ? 'true' : 'false'}" class="form-control" id="genre" value="#{cc.attrs.game.genre}">
+                    <f:selectItems value="#{gameController.gameGenre}" var="genre" itemLabel="#{genre.label}" itemValue="#{genre}" />
+                </h:selectOneMenu>
+                <h:message for="genre" errorClass="text-danger"/>
+
+            </h:panelGroup>
+
+            <h:panelGroup layout="block" class="form-group">
+                <h:outputLabel value="Price:" for="price"/>
+                <h:inputText readonly="#{cc.attrs.readonly ? 'true' : 'false'}" class="form-control" size="20" required="true" id="price" value="#{cc.attrs.game.price}">
+                    <f:converter converterId="javax.faces.Double" />
+                </h:inputText>
+                <h:message for="price" errorClass="text-danger"/>
+            </h:panelGroup>
+
+            <h:panelGroup layout="block" class="form-group">
+                <h:outputLabel value="Date of Release: " for="gameDate"/>
+                <h:inputText readonly="#{cc.attrs.readonly ? 'true' : 'false'}" disabled="#{cc.attrs.readonly ? 'true' : 'false'}" class="form-control" p:type="date" id="gameDate" value="#{cc.attrs.game.dateOfRelease}" >
+                    <f:convertDateTime type="localDate" pattern="yyyy-MM-dd"/>
+                </h:inputText>
+                <h:message for="gameDate" errorClass="text-danger"/>
+            </h:panelGroup>
+            <ui:fragment rendered="#{not cc.attrs.readonly}">
+                <h:commandButton value="Save Game" class="btn btn-primary" action="#{cc.attrs.action}" />
+            </ui:fragment>
+
+            <ui:fragment rendered="#{cc.attrs.admin}">
+                <h:outputText value="Only admin can see this!" />
+            </ui:fragment>
+        </h:form>
+    </cc:implementation>
+</html>

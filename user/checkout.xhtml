@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../WEB-INF/templetes/storeTemplete.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="title">
+        Payment
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form>
+            <h:panelGroup layout="block" class="form-group">
+                <h:outputLabel value="Order Total:" for="name"/>
+                <h:outputText class="form-control" id="name" value="#{cartController.orderTotal}"/>
+                <h:message for="name" errorClass="text-danger"/>
+            </h:panelGroup>
+
+            <h:panelGroup layout="block" class="form-group">
+                <h:outputLabel value="Payment Method:" for="method"/>
+                <h:inputHidden class="form-control" id="orderVersion" value="#{cartController.order.version}"/>
+
+                <h:selectOneMenu class="form-control" id="method" value="#{cartController.payment.paymentType}">
+                    <f:selectItem itemValue="CreditCard" itemLabel="Credit Card" />
+                    <f:selectItem itemValue="DebitCard" itemLabel="Debit Card" />
+                </h:selectOneMenu>
+                <h:message for="genre" errorClass="text-danger"/>
+            </h:panelGroup>
+
+            <h:panelGroup layout="block" class="form-group">
+                <h:outputLabel value="Card number: " for="number"/>
+                <h:inputHidden class="form-control" id="orderVersion1" value="#{cartController.order.version}"/>
+                <h:inputText required="true" class="form-control" id="number" value="Enter your card number here">
+                </h:inputText>
+                <h:outputLabel value="Exp. Date " for="date"/>
+                <h:inputText required="true" class="form-control" id="date" value="MM/YY"/>
+                <h:outputLabel value="CVV " for="cvv"/>
+                <h:inputText required="true" class="form-control" id="cvv" value="CVV"/>
+                <h:message for="cvv" errorClass="text-danger"/>
+            </h:panelGroup>
+        </h:form>
+        <h:form>
+            <h:inputHidden class="form-control" id="orderVersion2" value="#{cartController.order.version}"/>
+            <h:inputHidden class="form-control" id="customerVersion" value="#{cartController.customer.version}"/>
+            <h:commandLink action="#{cartController.placeOrder()}" value="Submit"/>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

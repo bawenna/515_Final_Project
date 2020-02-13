@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../WEB-INF/templetes/storeTemplete.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:define name="title">
+        Game Entry Confirmation
+    </ui:define>
+
+    <ui:define name="content">
+        <h1>New Game has been recorded and validated!</h1>
+        <ul>
+            <li>#{gameController.game.id}</li>
+            <li>#{gameController.game.name}</li>
+            <li>#{gameController.game.genre}</li>
+            <li>#{gameController.game.price}</li>
+            <li>#{gameController.game.dateOfRelease}</li>
+        </ul>
+
+        <h:link outcome="/admin/welcome.xhtml" value="Return to Welcome Page"/>
+
+    </ui:define>
+
+</ui:composition>
