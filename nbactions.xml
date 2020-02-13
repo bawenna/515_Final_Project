@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+        <action>
+            <actionName>CUSTOM-sonar</actionName>
+            <displayName>sonar</displayName>
+            <goals>
+                <goal>sonar:sonar</goal>
+            </goals>
+            <properties>
+                <sonar.host.url>https://wheaton.rice.iit.edu/sonar/</sonar.host.url>
+                <sonar.logine03f8481d1ccea3e643e15de4d8acda75c30a0d6></sonar.logine03f8481d1ccea3e643e15de4d8acda75c30a0d6>
+            </properties>
+        </action>
+        <action>
+            <actionName>CUSTOM-sonar1</actionName>
+            <displayName>sonar1</displayName>
+            <goals>
+                <goal>sonar:sonar</goal>
+            </goals>
+            <properties>
+                <sonar.host.url>https://wheaton.rice.iit.edu/sonar/</sonar.host.url>
+                <sonar.login>4da7ef8ed3e1249a78a46b8f882106195aca85e0</sonar.login>
+            </properties>
+        </action>
+    </actions>
